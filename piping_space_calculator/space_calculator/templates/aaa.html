@@ -1,0 +1,45 @@
+{% extends 'base.html' %}
+
+{% block title %} - aaa{% endblock %}
+
+{% block content %}
+
+
+
+<form method="post" action="{% url 'aaa' %}">
+    {% csrf_token %}
+    <div>
+        <div>
+            <a class=""><label for="{{ pipe_space_calculator_form.flange.id_for_label }}">Flange:</label></a>
+            <a class="mr-3">{{ pipe_space_calculator_form.flange }}</a>
+            <a class=""><label for="{{ pipe_space_calculator_form.dn_1.id_for_label }}">Pipe DN 1 with flange:</label></a>
+            <a class="mr-3">{{ pipe_space_calculator_form.dn_1 }}</a>
+            <a class=""><label for="{{ pipe_space_calculator_form.dn_2.id_for_label }}">Pipe DN 2 (no flange):</label></a>
+            <a class="">{{ pipe_space_calculator_form.dn_2 }}</a>
+        </div>
+        <div>
+            <a class=""><label for="{{ pipe_space_calculator_form.min_gap.id_for_label }}">Minimum Gap:</label></a>
+            <a class="">{{ pipe_space_calculator_form.min_gap }}</a>
+        </div>
+    </div>
+    <button class="btn btn-primary" type="submit">Calculate</button>
+</form>
+<div class="mb-4">
+    <a class="mr-5">Minimum space between axis of the pipes is = <a class="h4">{{pipe_space}}</a></a>
+</div>
+
+{% if form %}
+<div class="mb-4">
+    <a class="mr-5">Name: {{name}}</a>
+    <a>Message: {{message}}</a>
+</div>
+{% endif %}
+
+<!-- my_template.html -->
+<form method="post" action="{% url 'aaa' %}">
+    {% csrf_token %}
+    {{ form.as_p }}
+    <button type="submit">Submit</button>
+</form>
+
+{% endblock %}
