@@ -3,7 +3,7 @@ from django.http import HttpResponse
 
 from .forms import MyForm, PipeSpaceCalculatorForm
 from .calculations import calculate_pipe_space
-from .pipe_db import flange_dimensions_pn10, flange_dimensions_pn16, flange_dimensions_pn25, flange_dimensions_pn40
+from .pipe_db import pipe_dimensions, flange_dimensions
 # Create your views here.
 
 
@@ -21,6 +21,7 @@ def hello(request):
 def aaa(request):
     context = {
         'pipe_space': '',
+        'flange': 'NONE',
     }
     if request.method == 'POST':
         form = MyForm(request.POST)
@@ -45,6 +46,9 @@ def aaa(request):
 
     context['form'] = form
     context['pipe_space_calculator_form'] = pipe_space_calculator_form
+    context['pipe_dimensions'] = pipe_dimensions
+    print(f'{pipe_dimensions.keys}')
+    context['flange_dimensions'] = flange_dimensions[context['flange']]
 
     return render(request, 'aaa.html', context)
 
