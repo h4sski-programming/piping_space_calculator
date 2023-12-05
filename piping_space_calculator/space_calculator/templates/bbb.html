@@ -1,0 +1,98 @@
+{% extends 'base.html' %}
+
+{% block title %} - aaa{% endblock %}
+
+{% block content %}
+
+<p>
+    {% for key, value in variablee.items %}
+    {{ key }} // {{ value }} <br/>
+    {% endfor %}
+</p>
+
+<form method="post" action="{% url 'bbb' %}">
+    {% csrf_token %}
+    <div>
+        <div>
+            <a class=""><label for="{{ pipe_space_calculator_form.flange.id_for_label }}">Flange:</label></a>
+            <a class="mr-3">{{ pipe_space_calculator_form.flange }}</a>
+            <a class=""><label for="{{ pipe_space_calculator_form.dn_1.id_for_label }}">Pipe DN 1 with flange:</label></a>
+            <a class="mr-3">{{ pipe_space_calculator_form.dn_1 }}</a>
+            <a class=""><label for="{{ pipe_space_calculator_form.dn_2.id_for_label }}">Pipe DN 2 (no flange):</label></a>
+            <a class="">{{ pipe_space_calculator_form.dn_2 }}</a>
+        </div>
+        <div>
+            <a class=""><label for="{{ pipe_space_calculator_form.min_gap.id_for_label }}">Minimum Gap:</label></a>
+            <a class="">{{ pipe_space_calculator_form.min_gap }}</a>
+        </div>
+    </div>
+    <button class="btn btn-primary" type="submit">Calculate</button>
+</form>
+<div class="mb-4">
+    <a class="mr-5">Minimum space between axis of the pipes is = <a class="h4">{{pipe_space}}</a></a>
+</div>
+
+<hr/>
+
+<h4>Pipe spacing table</h4>
+
+<table class='table table-hover'>
+    <tr>
+        <th></th>
+        <th>No flange</th>
+        {% for pipe_dn_horizontal in pipe_dimensions.keys %}
+        <th>DN{{ pipe_dn_horizontal }}</th>
+        {% endfor %}
+    </tr>
+    <tr>
+        <th>Flange</th>
+        <td>OD [mm]</td>
+        {% for pipe_dn_horizontal in pipe_dimensions.values %}
+        <td>{{ pipe_dn_horizontal.OD }}</td>
+        {% endfor %}
+    </tr>
+    
+    {% for pipe_dn_vertical in pipe_dimensions.values %}
+    <tr>
+        <th>DN{{ pipe_dn_vertical.DN }}</th>
+        <td>{{ pipe_dn_vertical.OD }}</td>
+        {% for pipe_dn_horizontal in pipe_dimensions.values %}
+
+        {% if pipe_dn_vertical.DN == pipe_dn_horizontal.DN %}
+            <td class="table-primary border">
+        {% else %}
+            <td class="border">
+        {% endif %}
+            {% for flange_dimension in flange_dimensions.values %}
+                {% if flange_dimension.DN == pipe_dn_vertical.DN %}
+                    {{ flange_dimension.OD|add:pipe_dn_horizontal.OD|add:min_gap }}
+                {% endif %}
+            {% endfor %}
+        </td>
+        {% comment %} <td>{{ flange_dimensions.flange.pipe_dn_horizontal.OD|add:pipe_dn_vertical.OD|add:min_gap }}</td> {% endcomment %}
+        {% endfor %}
+    </tr>
+    {% endfor %}
+
+</table>
+
+<p>{{ pipe_dimensions.25.OD }}</p>
+
+<hr/>
+<hr/>
+
+{% if form %}
+<div class="mb-4">
+    <a class="mr-5">Name: {{name}}</a>
+    <a>Message: {{message}}</a>
+</div>
+{% endif %}
+
+<!-- my_template.html -->
+<form method="post" action="{% url 'aaa' %}">
+    {% csrf_token %}
+    {{ form.as_p }}
+    <button type="submit">Submit</button>
+</form>
+
+{% endblock %}
