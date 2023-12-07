@@ -24,4 +24,10 @@ class ViewsTests(TestCase):
         response = self.client.get(reverse('bbb'))
         self.assertEqual(response.status_code, 200)
         self.assertTemplateUsed(response, 'bbb.html')
+        
     
+    def test_hello_viw(self):
+        response = self.client.get(reverse('hello'))
+        self.assertEqual(response.status_code, 200)
+        self.assertContains(response, 'Hello, world. Hello.')
+        

@@ -4,7 +4,14 @@
 
 {% block content %}
 
-<h2>PN10</h2>
+<nav class="nav nav-pills mb-4">
+    <a class="nav-item nav-link border mr-2" href="#pn10">PN10</a>
+    <a class="nav-item nav-link border mr-2" href="#pn16">PN16</a>
+    <a class="nav-item nav-link border mr-2" href="#pn25">PN25</a>
+    <a class="nav-item nav-link border mr-2" href="#pn40">PN40</a>
+</nav>
+
+<h2 id="pn10">PN10</h2>
 <table class='table table-hover table-sm'>
     <tr>
         <th></th>
@@ -36,10 +43,10 @@
     </tr>
     {% endfor %}
 </table>
-<hr/>
 
 
-<h2>PN16</h2>
+
+<h2 id="pn16">PN16</h2>
 <table class='table table-hover table-sm'>
     <tr>
         <th></th>
@@ -71,10 +78,10 @@
     </tr>
     {% endfor %}
 </table>
-<hr/>
 
 
-<h2>PN25</h2>
+
+<h2 id="pn25">PN25</h2>
 <table class='table table-hover table-sm'>
     <tr>
         <th></th>
@@ -106,10 +113,10 @@
     </tr>
     {% endfor %}
 </table>
-<hr/>
 
 
-<h2>PN40</h2>
+
+<h2 id="pn40">PN40</h2>
 <table class='table table-hover table-sm'>
     <tr>
         <th></th>
@@ -141,7 +148,7 @@
     </tr>
     {% endfor %}
 </table>
-<hr/>
+
 
 
 {% endblock %}
